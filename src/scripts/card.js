@@ -1,6 +1,4 @@
-import { cardTemplate } from "./index.js";
-
-export function createCard(element, deleteCard, likeCard, openImage) {
+export function createCard(element, cardTemplate, deleteCard, likeCard, openImage) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");

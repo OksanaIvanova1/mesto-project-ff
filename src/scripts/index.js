@@ -3,17 +3,28 @@ import { initialCards } from "./cards.js";
 import { createCard, deleteCard, likeCard } from "./card.js";
 import { openModal, closeModal } from "./modal.js";
 
-export const cardTemplate = document.querySelector("#card-template").content;
+const cardTemplate = document.querySelector("#card-template").content;
 
 const placesList = document.querySelector(".places__list");
 initialCards.forEach(function (element) {
-  const cardNew = createCard(element, deleteCard, likeCard, openImage);
+  const cardNew = createCard(element, cardTemplate, deleteCard, likeCard, openImage);
   placesList.append(cardNew);
 });
 
 const popupAll = document.querySelectorAll(".popup");
 popupAll.forEach(function (element) {
 	element.classList.add("popup_is-animated");
+	
+	const buttonClose = element.querySelector(".popup__close");
+  buttonClose.addEventListener("click", function (evt) {
+    closeModal(element);
+  });
+
+  element.addEventListener("click", function (evt) {
+    if (evt.target.classList.contains("popup")) {
+      closeModal(element);
+    }
+  });
 });
 
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -61,7 +72,7 @@ function handleNewPlaceSubmit(evt) {
   newPlaceCard.name = placeNameInput.value;
   newPlaceCard.link = placeLinkInput.value;
 
-  const newCard = createCard(newPlaceCard, deleteCard, likeCard, openImage);
+  const newCard = createCard(newPlaceCard, cardTemplate, deleteCard, likeCard, openImage);
   placesList.prepend(newCard);
 
   placeNameInput.value = "";
