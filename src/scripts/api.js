@@ -1,3 +1,5 @@
+import { checkResponse } from "./utils.js";
+
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/wff-cohort-16',
   headers: {
@@ -11,17 +13,12 @@ export function loadDataApi() {
     fetch(`${config.baseUrl}/users/me`, {
       headers: config.headers
     })
-      .then(res => res.json()),
+    .then(checkResponse),
       
     fetch(`${config.baseUrl}/cards`, {
       headers: config.headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(checkResponse)
   ])
 }
 
@@ -33,12 +30,7 @@ export function editAvatarApi(link) {
         avatar: link
       })
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
+  .then(checkResponse)
 }
 
 export function editProfileApi(name, about) {
@@ -50,12 +42,7 @@ export function editProfileApi(name, about) {
         about
       })
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
+  .then(checkResponse)
 }
 
 export function addCardApi(name, link) {
@@ -67,12 +54,7 @@ export function addCardApi(name, link) {
         link
       })
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
+  .then(checkResponse)
 }
 
 export function deleteCardApi(cardID) {
@@ -80,12 +62,7 @@ export function deleteCardApi(cardID) {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(res => {
-    if (res.ok) {
-      return res.ok;
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
+  .then(checkResponse)
 }
 
 export function addLikeApi(cardID) {
@@ -93,12 +70,7 @@ export function addLikeApi(cardID) {
     method: 'PUT',
       headers: config.headers
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
+  .then(checkResponse)
 }
 
 export function deleteLikeApi(cardID) {
@@ -106,13 +78,5 @@ export function deleteLikeApi(cardID) {
     method: 'DELETE',
       headers: config.headers
   })
-  .then(res => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  })
+  .then(checkResponse)
 }
-
-
-

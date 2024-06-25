@@ -69,7 +69,7 @@ const avatarLinkInput = newAvatar.link;
 avatar.addEventListener("click", function (evt) {
   openModal(avatarPopup);
 
-  avatarLinkInput.value = "";
+  newAvatar.reset();
   
   clearValidation(newAvatar, validationConfig);
 });
@@ -82,6 +82,7 @@ function handleNewAvatarSubmit(evt) {
   editAvatarApi(avatarLinkInput.value)
   .then((res) => {
     profileAvatar.style.backgroundImage = `url(${res.avatar})`;
+    closeModal(avatarPopup);
   })
   .catch((err) => {
     console.log(err);
@@ -89,8 +90,6 @@ function handleNewAvatarSubmit(evt) {
   .finally(() => {
     renderLoading(btnSaveAvatar, false);
   }); 
-
-  closeModal(avatarPopup);
 }
 newAvatar.addEventListener("submit", handleNewAvatarSubmit);
 
@@ -118,6 +117,7 @@ function handleEditProfileSubmit(evt) {
   .then((res) => {
     profileTitle.textContent = res.name;
     profileDescription.textContent = res.about;
+    closeModal(editPopup);
   })
   .catch((err) => {
     console.log(err);
@@ -125,8 +125,6 @@ function handleEditProfileSubmit(evt) {
   .finally(() => {
     renderLoading(btnSaveProfile, false);
   }); 
-
-  closeModal(editPopup);
 }
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
@@ -138,8 +136,7 @@ const placeLinkInput = newPlaceForm.link;
 
 buttonAdd.addEventListener("click", function (evt) {
   openModal(addPopup);
-  placeNameInput.value = "";
-  placeLinkInput.value = "";
+  newPlaceForm.reset();
 
   clearValidation(newPlaceForm, validationConfig); 
 });
@@ -154,6 +151,7 @@ function handleNewPlaceSubmit(evt) {
   .then((result) => {
     const newCard = createCard(result, cardTemplate, deleteCard, likeCard, openImage, result.owner._id);
     placesList.prepend(newCard);
+    closeModal(addPopup);
   })
   .catch((err) => {
     console.log(err);
@@ -161,8 +159,6 @@ function handleNewPlaceSubmit(evt) {
   .finally(() => {
     renderLoading(btnSavePlace, false);
   });  
-
-  closeModal(addPopup);
 }
 newPlaceForm.addEventListener("submit", handleNewPlaceSubmit);
 
@@ -173,6 +169,7 @@ function openImage(cardImageSrc, cardTitle) {
   openModal(imagePopup);
 
 	imagePopupSrc.setAttribute("src", cardImageSrc);
+  imagePopupSrc.setAttribute("alt", cardTitle);
 	imagePopupName.textContent = cardTitle;
 }
 

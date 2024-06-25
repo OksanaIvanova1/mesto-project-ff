@@ -56,11 +56,17 @@ export function likeCard(card, button, cardID) {
       likeCount.textContent = result.likes.length;
       button.classList.remove("card__like-button_is-active");
     })
+    .catch((err) => {
+      console.log(err);
+    });
   } else {
     addLikeApi(cardID)
     .then((result) => {
       likeCount.textContent = result.likes.length;
       button.classList.add("card__like-button_is-active");
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 }
